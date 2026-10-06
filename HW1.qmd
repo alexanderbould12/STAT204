@@ -1,0 +1,108 @@
+---
+title: "HW1"
+format: html
+---
+```{r}
+
+#Load Required Package
+
+
+library(palmerpenguins)
+# install.packages("dplyr")
+library(dplyr)
+
+#Load the Penguins Data Set
+data(penguins)
+
+
+#View the first few rows
+head(penguins)
+
+#setup
+#number of rows
+nrow(penguins)
+
+#number of columns
+ncol(penguins)
+
+#data types
+str(penguins)
+
+#Question 1.1:
+# Extract bill_length_mm as a vector
+bill_lengths <- c(pull(penguins, bill_len))
+
+# Calculate: mean, median, sd, min, max (handle NAs!)
+mean(bill_lengths, na.rm = TRUE)
+median(bill_lengths, na.rm = TRUE)
+sd(bill_lengths, na.rm = TRUE)
+min(bill_lengths, na.rm = TRUE)
+max(bill_lengths, na.rm = TRUE)
+
+#Question 1.2
+# Create logical vector: TRUE when bill length > 45mm
+long_bills <- bill_lengths > 45
+
+# How many penguins have long bills?
+sum(long_bills == TRUE, na.rm = TRUE)
+
+#Question 2.1
+# Extract bill lengths for Dream island penguins only
+dream_bl <- pull(filter(penguins, island == "Dream"), bill_len)
+
+# Calculate the mean for this subset
+mean(dream_bl, na.rm = TRUE)
+
+#Question 2.2
+# How many Adelie penguins are in the dataset?
+adel_peng <- pull(filter(penguins, species == "Adelie"))
+sum(adel_peng)
+
+#Question 2.3
+# Find: body mass, species, and island of the heaviest penguin
+heaviest_peng <- max(penguins$body_mass, na.rm = TRUE)
+g<- penguins[penguins$body_mass == heaviest_peng, c("body_mass", "species", "island") ]
+
+#Question 3.1
+# Remove rows with missing values
+penguins_complete <- penguins[complete.cases(penguins), ]
+
+#Create matrix with: bill_length_mm, bill_depth_mm, 
+#flipper_length_mm, body_mass_g
+bill_length_mm <- c(pull(penguins_complete, bill_len))
+bill_depth_mm <- c(pull(penguins_complete, bill_dep))
+flipper_length_mm <- c(pull(penguins_complete, flipper_len))
+body_mass_g <- c(pull(penguins_complete, body_mass))
+
+# Create matrix with: bill_length_mm, bill_depth_mm, 
+# flipper_length_mm, body_mass_g
+penguin_measurements1 <- cbind(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g)
+
+#Question 3.2
+# Use apply() to calculate mean of each column
+apply(penguin_measurements1, 2, mean)
+
+# Use apply() to find which row has the maximum for each column
+apply(penguin_measurements1, 2, max)
+
+#Question 4.1
+#Function that: removes NAs, returns (x - mean) / sd
+standardize <- function(x) { }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
